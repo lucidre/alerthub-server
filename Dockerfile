@@ -1,14 +1,4 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-alpine
-
-# Set the working directory
-WORKDIR /app
-
-# Copy the project files
-COPY . .
-
-# Build the application
-RUN ./mvnw clean install
-
-# Run the application
-CMD ["java", "-jar", "target/your-app.jar"]
+FROM eclipse-temurin:17-jdk-alpine
+VOLUME /tmp
+COPY target/demo-0.0.1-SNAPSHOT.jar demo.jar
+ENTRYPOINT ["java","-jar","/demo.jar"]

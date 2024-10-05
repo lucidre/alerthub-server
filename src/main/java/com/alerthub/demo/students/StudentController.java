@@ -1,4 +1,4 @@
-
+/* 
 package com.alerthub.demo.students;
 
 import java.util.List;
@@ -42,4 +42,4 @@ public class StudentController {
     public String addUser(@PathVariable Long id, @RequestParam String name, @RequestBody Student user) {
         return "User ID: " + id + ", Name: " + name + ", Age: " + user.getAge() + " added.";
     }
-}
+} */

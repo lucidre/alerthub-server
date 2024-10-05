@@ -1,4 +1,4 @@
-package com.alerthub.demo.students;
+/* package com.alerthub.demo.students;
 
 import java.util.Optional;
 
@@ -12,3 +12,4 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     Optional<Student> findStudentByEmail(String email);
 
 }
+ */
