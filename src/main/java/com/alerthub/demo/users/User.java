@@ -41,8 +41,6 @@ public class User {
                 + ", country=" + country + ", imageUrl=" + imageUrl + "]";
     }
 
-
-    
     public String getUserId() {
         return userId;
     }
@@ -106,43 +104,58 @@ public class User {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         User other = (User) obj;
         if (userId == null) {
-            if (other.userId != null)
+            if (other.userId != null) {
                 return false;
-        } else if (!userId.equals(other.userId))
+            }
+        } else if (!userId.equals(other.userId)) {
             return false;
+        }
         if (fullName == null) {
-            if (other.fullName != null)
+            if (other.fullName != null) {
                 return false;
-        } else if (!fullName.equals(other.fullName))
+            }
+        } else if (!fullName.equals(other.fullName)) {
             return false;
+        }
         if (email == null) {
-            if (other.email != null)
+            if (other.email != null) {
                 return false;
-        } else if (!email.equals(other.email))
+            }
+        } else if (!email.equals(other.email)) {
             return false;
+        }
         if (phoneNumber == null) {
-            if (other.phoneNumber != null)
+            if (other.phoneNumber != null) {
                 return false;
-        } else if (!phoneNumber.equals(other.phoneNumber))
+            }
+        } else if (!phoneNumber.equals(other.phoneNumber)) {
             return false;
+        }
         if (country == null) {
-            if (other.country != null)
+            if (other.country != null) {
                 return false;
-        } else if (!country.equals(other.country))
+            }
+        } else if (!country.equals(other.country)) {
             return false;
+        }
         if (imageUrl == null) {
-            if (other.imageUrl != null)
+            if (other.imageUrl != null) {
                 return false;
-        } else if (!imageUrl.equals(other.imageUrl))
+            }
+        } else if (!imageUrl.equals(other.imageUrl)) {
             return false;
+        }
         return true;
     }
 

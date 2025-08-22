@@ -1,4 +1,3 @@
-
 package com.alerthub.demo.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping; 
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alerthub.demo.NetworkResult;
@@ -23,6 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping(path = "api/v1/user")
 @Tag(name = "User", description = "User APIs")
 public class UserController {
+
     private final String fetchSuccessful = "Operation Successful";
 
     private final UserService userService;
@@ -72,6 +72,7 @@ public class UserController {
         try {
             userService.deleteUser(uid);
             NetworkResult result = new NetworkResult(fetchSuccessful, null);
+
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (Exception exception) {
             return new ResponseEntity<>(new NetworkResult(exception.getMessage(), null),

@@ -1,4 +1,3 @@
-
 package com.alerthub.demo.users;
 
 import java.util.Optional;
@@ -7,12 +6,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository eventRepository) {
         this.userRepository = eventRepository;
     }
+
     public Optional<User> getOptionalUser(String uid) {
         if (uid == null) {
             throw new IllegalArgumentException("User ID must not be null");
@@ -20,6 +21,7 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByUserId(uid);
         return optionalUser;
     }
+
     public User getUser(String uid) {
         if (uid == null) {
             throw new IllegalArgumentException("User ID must not be null");
@@ -66,8 +68,8 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByUserId(uid);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            // userRepository.deleteById(user.getMongoId()); 
-        
+            userRepository.deleteById(user.getMongoId());
+
         } else {
             throw new IllegalStateException("Event not found");
         }
