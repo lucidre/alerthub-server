@@ -1,0 +1,9 @@
+# Build the JAR file first
+./mvnw clean package -DskipTests
+
+# Then build the Docker image
+docker build -t lucidre/demo:latest .
+
+# push to server
+docker push lucidre/demo:latest
+ 
