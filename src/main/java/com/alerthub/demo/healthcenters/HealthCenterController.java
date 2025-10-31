@@ -133,4 +133,32 @@ public class HealthCenterController {
         }
     }
 
+    @PutMapping(path = "add_user/{uid}")
+    @Operation(summary = "Add user to healthcenter", description = "")
+    public ResponseEntity<NetworkResult> addUserToCenter(@PathVariable String uid,
+            @RequestBody(required = true) String userId) {
+        try {
+            service.addUserToCenter(uid, userId);
+            NetworkResult result = new NetworkResult(fetchSuccessful, null);
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(new NetworkResult(exception.getMessage(), null),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(path = "remove_user/{uid}")
+    @Operation(summary = "Remove user from healthcenter", description = "")
+    public ResponseEntity<NetworkResult> removeUserFromCenter(@PathVariable String uid,
+            @RequestBody(required = true) String userId) {
+        try {
+            service.removeUserFromCenter(uid, userId);
+            NetworkResult result = new NetworkResult(fetchSuccessful, null);
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(new NetworkResult(exception.getMessage(), null),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

@@ -124,4 +124,37 @@ public class HealthCenterService {
         }
     }
 
+    public void addUserToCenter(String uid, String userId) {
+        if (uid == null || userId == null) {
+            throw new IllegalArgumentException("ID must not be null");
+        }
+
+        Optional<HealthCenter> optionalCenter = healthcenterRepository.findByUid(uid);
+
+        if (optionalCenter.isPresent()) {
+            HealthCenter center = optionalCenter.get();
+            center.getPatients().add(userId);
+            healthcenterRepository.save(center);
+
+        } else {
+            throw new IllegalStateException("HealthCenter not found");
+        }
+    }
+
+    public void removeUserFromCenter(String uid, String userId) {
+        if (uid == null || userId == null) {
+            throw new IllegalArgumentException("ID must not be null");
+        }
+
+        Optional<HealthCenter> optionalCenter = healthcenterRepository.findByUid(uid);
+
+        if (optionalCenter.isPresent()) {
+            HealthCenter center = optionalCenter.get();
+            center.getPatients().remove(userId);
+            healthcenterRepository.save(center);
+
+        } else {
+            throw new IllegalStateException("HealthCenter not found");
+        }
+    }
 }

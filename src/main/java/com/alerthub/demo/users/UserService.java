@@ -1,6 +1,7 @@
 package com.alerthub.demo.users;
 
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,23 @@ public class UserService {
 
         } else {
             throw new IllegalStateException("Event not found");
+        }
+    }
+
+    public void updateUserDescription(String uid, String description) {
+        if (uid == null || description == null) {
+            throw new IllegalArgumentException("User ID, and User must not be null");
+        }
+
+        Optional<User> optionalUser = userRepository.findByUserId(uid);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setDescription(description);
+
+            userRepository.save(user);
+
+        } else {
+            throw new IllegalStateException("User not found");
         }
     }
 

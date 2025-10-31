@@ -3,6 +3,8 @@ package com.alerthub.demo.panic_modes;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.alerthub.demo.users.User;
+
 @Document(collection = "panic_modes")
 public class PanicMode {
 
@@ -16,6 +18,7 @@ public class PanicMode {
     private Double latitude;
     private Double longitude;
     private Long updatedAt;
+    private User user;
 
     public PanicMode() {
     }
@@ -39,6 +42,15 @@ public class PanicMode {
         this.latitude = latitude;
         this.longitude = longitude;
         this.updatedAt = updatedAt;
+
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getUpdatedAt() {
@@ -110,6 +122,7 @@ public class PanicMode {
         final int prime = 31;
         int result = 1;
 
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((uid == null) ? 0 : uid.hashCode());
         result = prime * result + ((isOnOrOff == null) ? 0 : isOnOrOff.hashCode());
@@ -140,6 +153,13 @@ public class PanicMode {
                 return false;
             }
         } else if (!updatedAt.equals(other.updatedAt)) {
+            return false;
+        }
+        if (user == null) {
+            if (other.user != null) {
+                return false;
+            }
+        } else if (!user.equals(other.user)) {
             return false;
         }
 
@@ -211,7 +231,7 @@ public class PanicMode {
 
     @Override
     public String toString() {
-        return "PanicMode [id=" + id + ", uid=" + uid + ", isOnOrOff=" + isOnOrOff + ", broadcastToCommunity=" + broadcastToCommunity + ", broadcastToProviders=" + broadcastToProviders + ", broadcastToContacts=" + broadcastToContacts + ", latitude=" + latitude + ", longitude=" + longitude + ", updatedAt=" + updatedAt + "]";
+        return "PanicMode [id=" + id + ", uid=" + uid + ", isOnOrOff=" + isOnOrOff + ", broadcastToCommunity=" + broadcastToCommunity + ", broadcastToProviders=" + broadcastToProviders + ", broadcastToContacts=" + broadcastToContacts + ", latitude=" + latitude + ", longitude=" + longitude + ", user=" + user + ", updatedAt=" + updatedAt + "]";
     }
 
 }

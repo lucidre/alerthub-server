@@ -1,4 +1,6 @@
-package com.alerthub.demo.users;
+package com.alerthub.demo.drivers;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alerthub.demo.NetworkResult;
@@ -19,32 +22,37 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping(path = "api/v1/user")
-@Tag(name = "User", description = "User APIs")
-public class UserController {
+@RequestMapping(path = "api/v1/driver")
+@Tag(name = "Driver", description = "Driver APIs")
+public class DriverController {
 
     private final String fetchSuccessful = "Operation Successful";
 
-    private final UserService userService;
+    private final DriverService service;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public DriverController(DriverService service) {
+        this.service = service;
     }
 
-    @GetMapping(path = "get_user/{uid}")
-    @Operation(summary = "Get user details", description = "")
-    public ResponseEntity<NetworkResult> getUserEvents(@PathVariable String uid) {
-        User user = userService.getUser(uid);
-        NetworkResult result = new NetworkResult(fetchSuccessful, user);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
-    }
-
-    @PostMapping(path = "create_user")
-    @Operation(summary = "Create user", description = "")
-    public ResponseEntity<NetworkResult> createEvent(@RequestBody User user) {
+    @GetMapping(path = "{uid}")
+    @Operation(summary = "Get Driver", description = "")
+    public ResponseEntity<NetworkResult> getDriver(@PathVariable String uid) {
         try {
-            userService.createUser(user);
+            Driver center = service.getDriver(uid);
+            NetworkResult result = new NetworkResult(fetchSuccessful, center);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(new NetworkResult(exception.getMessage(), null),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(path = "")
+    @Operation(summary = "Create Driver", description = "")
+    public ResponseEntity<NetworkResult> createDriver(@RequestBody Driver center) {
+        try {
+            service.createDriver(center);
             NetworkResult result = new NetworkResult(fetchSuccessful, null);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (Exception exception) {
@@ -53,11 +61,12 @@ public class UserController {
         }
     }
 
-    @PutMapping(path = "update_user/{uid}")
-    @Operation(summary = "Update user", description = "")
-    public ResponseEntity<NetworkResult> editEvent(@PathVariable String uid, @RequestBody User user) {
+    @PutMapping(path = "{uid}")
+    @Operation(summary = "Edit Driver", description = "")
+    public ResponseEntity<NetworkResult> editDriver(@PathVariable String uid,
+            @RequestBody(required = true) Driver center) {
         try {
-            userService.editUser(uid, user);
+            service.editDriver(uid, center);
             NetworkResult result = new NetworkResult(fetchSuccessful, null);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (Exception exception) {
@@ -66,12 +75,13 @@ public class UserController {
         }
     }
 
-    @PutMapping(path = "update_user_description/{uid}")
-    @Operation(summary = "Update user description", description = "")
-    public ResponseEntity<NetworkResult> updateUserDescription(@PathVariable String uid, @RequestBody String description) {
+     @GetMapping(path = "healthcenter_list/{id}")
+    @Operation(summary = "Get all health center drivers", description = "")
+    public ResponseEntity<NetworkResult> getAllHealthCenterDrivers(@PathVariable String id,
+            @RequestParam Integer page) {
         try {
-            userService.updateUserDescription(uid, description);
-            NetworkResult result = new NetworkResult(fetchSuccessful, null);
+            final List<Driver> drivers = service.getAllHealthCenterDrivers(id, page);
+            NetworkResult result = new NetworkResult(fetchSuccessful, drivers);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch (Exception exception) {
             return new ResponseEntity<>(new NetworkResult(exception.getMessage(), null),
@@ -79,18 +89,20 @@ public class UserController {
         }
     }
 
-    @DeleteMapping(path = "delete_user/{uid}")
-    @Operation(summary = "Delete user", description = "")
-    public ResponseEntity<NetworkResult> deleteEvent(@PathVariable String uid) {
+    
+    @DeleteMapping(path = "{uid}")
+    @Operation(summary = "Delete Driver", description = "")
+    public ResponseEntity<NetworkResult> deleteDriver(
+            @RequestParam String uid) {
         try {
-            userService.deleteUser(uid);
+            service.deleteDriver(uid);
             NetworkResult result = new NetworkResult(fetchSuccessful, null);
-
-            return new ResponseEntity<>(result, HttpStatus.CREATED);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception exception) {
             return new ResponseEntity<>(new NetworkResult(exception.getMessage(), null),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+ 
 
 }

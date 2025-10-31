@@ -21,6 +21,7 @@ public class HealthCenter {
     private String country;
     private String helpline;
     private List<String> drivers;
+    private List<String> patients;
 
     // Default constructor
     public HealthCenter() {
@@ -31,7 +32,8 @@ public class HealthCenter {
             String fullName, String email,
             String description,
             String location, Double lat, Double lng, List<String> images,
-            String country, String helpline, List<String> drivers) {
+            String country, String helpline, List<String> drivers, List<String> patients
+    ) {
         this.fullName = fullName;
         this.email = email;
         this.country = country;
@@ -43,11 +45,12 @@ public class HealthCenter {
         this.country = country;
         this.helpline = helpline;
         this.drivers = drivers;
+        this.patients = patients;
     }
 
     public HealthCenter(String id, String fullName, String email, String description,
             String location, Double lat, Double lng, List<String> images,
-            String country, String helpline, List<String> drivers) {
+            String country, String helpline, List<String> drivers, List<String> patients) {
         this.userId = id;
         this.fullName = fullName;
         this.email = email;
@@ -62,6 +65,7 @@ public class HealthCenter {
         this.country = country;
         this.helpline = helpline;
         this.drivers = drivers;
+        this.patients = patients;
     }
 
     public String getMongoId() {
@@ -70,6 +74,14 @@ public class HealthCenter {
 
     public void setMongoId(String mongoId) {
         this.mongoId = mongoId;
+    }
+
+    public List<String> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(List<String> patients) {
+        this.patients = patients;
     }
 
     public String getUserId() {
@@ -175,6 +187,7 @@ public class HealthCenter {
         result = prime * result + ((country == null) ? 0 : country.hashCode());
         result = prime * result + ((helpline == null) ? 0 : helpline.hashCode());
         result = prime * result + ((drivers == null) ? 0 : drivers.hashCode());
+        result = prime * result + ((patients == null) ? 0 : patients.hashCode());
         return result;
     }
 
@@ -275,6 +288,13 @@ public class HealthCenter {
         } else if (!drivers.equals(other.drivers)) {
             return false;
         }
+        if (patients == null) {
+            if (other.patients != null) {
+                return false;
+            }
+        } else if (!patients.equals(other.patients)) {
+            return false;
+        }
 
         return true;
     }
@@ -284,6 +304,7 @@ public class HealthCenter {
         return "HealthCenter [id=" + userId + ", fullName=" + fullName + ", email=" + email
                 + ", description=" + description + ", location=" + location + ", lat=" + lat
                 + ", lng=" + lng + ", images=" + images + ", country=" + country
-                + ", helpline=" + helpline + ", drivers=" + drivers + "]";
+                + ", helpline=" + helpline + ", drivers=" + drivers + ", patients=" + patients + "]";
     }
 }
+

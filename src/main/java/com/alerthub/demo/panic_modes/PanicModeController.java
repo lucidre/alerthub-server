@@ -63,6 +63,19 @@ public class PanicModeController {
         }
     }
 
+
+    @GetMapping(path = "get_panic/{uid}")
+    @Operation(summary = "Get user panic", description = "")
+    public ResponseEntity<NetworkResult> getUserPanic( @RequestParam Double userLatitude,
+            @RequestParam Double userLongitude,
+            @RequestParam Double maxDistance) {
+         List<PanicMode> panics = getFilteredPanics(userLatitude, userLongitude, maxDistance);
+ 
+        NetworkResult result = new NetworkResult(fetchSuccessful, panics);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+
     @GetMapping(path = "/listen", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @Operation(summary = "Listen to Panic Updates", description = "SSE endpoint for real-time panic updates within specified range")
     public SseEmitter listenToPanic(

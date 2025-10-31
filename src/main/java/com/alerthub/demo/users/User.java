@@ -14,11 +14,12 @@ public class User {
     private String phoneNumber;
     private String country;
     private String imageUrl;
+    private String description;
 
     public User() {
     }
 
-    public User(String fullName, String email, String phoneNumber, String country, String imageUrl) {
+    public User(String fullName, String email, String phoneNumber, String country, String imageUrl, String description) {
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -26,19 +27,29 @@ public class User {
         this.imageUrl = imageUrl;
     }
 
-    public User(String id, String fullName, String email, String phoneNumber, String country, String imageUrl) {
+    public User(String id, String fullName, String email, String phoneNumber, String country, String imageUrl, String description) {
         this.userId = id;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.country = country;
         this.imageUrl = imageUrl;
+        this.description = description;
+
     }
 
     @Override
     public String toString() {
         return "User [id=" + userId + ", fullName=" + fullName + ", email=" + email + ", phoneNumber=" + phoneNumber
-                + ", country=" + country + ", imageUrl=" + imageUrl + "]";
+                + ", country=" + country + ", imageUrl=" + imageUrl + ", description=" + description + "]";
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUserId() {
@@ -93,6 +104,7 @@ public class User {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((userId == null) ? 0 : userId.hashCode());
         result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
@@ -147,6 +159,13 @@ public class User {
                 return false;
             }
         } else if (!country.equals(other.country)) {
+            return false;
+        }
+        if (description == null) {
+            if (other.description != null) {
+                return false;
+            }
+        } else if (!description.equals(other.description)) {
             return false;
         }
         if (imageUrl == null) {

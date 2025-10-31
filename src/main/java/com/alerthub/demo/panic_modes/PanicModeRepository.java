@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 public interface PanicModeRepository extends MongoRepository<PanicMode, String> {
 
     @Query("{ 'uid': ?0 }")
-    Optional<PanicMode> findByUid(String uid);
+    List<PanicMode> findAllByUid(String uid);
 
-    @Query("{ 'isOnOrOff': ?0, 'updatedAt': { $gte: ?1 } }")
+    @Query("{ 'isOnOrOff': ?0 }")
     List<PanicMode> findActivePanics(Boolean isOnOrOff, Long minUpdatedAt);
 }
